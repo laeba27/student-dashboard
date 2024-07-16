@@ -18,9 +18,9 @@ function layout({ children }) {
       </div>
 
       {/* Right Sidebar */}
-      <div className="hidden md:block rounded-l-3xl w-64 border-l bg-sky-100 border-l-slate-100 h-full ">
+      {/* <div className="hidden md:block rounded-l-3xl w-64 border-l bg-sky-100 border-l-slate-100 h-full ">
         <RightSidebar />
-      </div>
+      </div> */}
     </div>
   );
 }

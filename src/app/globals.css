@@ -102,3 +102,32 @@
     --chart-5: 210 75% 55%; /* Softer Very Light Blue */
   }
 }
+
+/* calendar-styles.css */
+.fc .fc-button-primary {
+  background-color: #4f46e5;
+  border-color: #4f46e5;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: #3730a3;
+  border-color: #3730a3;
+}
+
+.fc .fc-button-primary:hover {
+  background-color: #4338ca;
+  border-color: #4338ca;
+}
+
+.fc-view-harness {
+  background-color: white;
+}
+
+.fc-list-event {
+  background-color: transparent !important;
+}
+
+.fc-list-day-cushion {
+  background-color: #f3f4f6 !important;
+}

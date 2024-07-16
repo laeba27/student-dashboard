@@ -1,5 +1,5 @@
 "use client";
-import { Input } from "@/components/ui/input";
+import { Input } from "../../../../components/ui/input";
 import { BellPlus } from "lucide-react";
 import {
   DropdownMenu,
@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "../../../../components/ui/dropdown-menu";
 
 import React, { useEffect, useState } from "react";
 

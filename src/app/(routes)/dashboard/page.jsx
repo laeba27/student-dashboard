@@ -1,7 +1,14 @@
 "use client";
-import React from 'react';
+import React from "react";
 import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, LabelList, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  LabelList,
+  XAxis,
+  YAxis,
+} from "recharts";
 import {
   Card,
   CardContent,
@@ -9,13 +16,13 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "../../../components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
+} from "../../../components/ui/chart";
 
 const chartData = [
   { month: "January", desktop: 79, mobile: 80 },
@@ -38,7 +45,7 @@ const chartConfig = {
   label: {
     color: "hsl(var(--background))",
   },
-}  // Keep this as is, no semicolon before it.
+}; // Keep this as is, no semicolon before it.
 
 const Page = () => {
   return (

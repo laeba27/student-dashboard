@@ -10,7 +10,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button } from "../../../../components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -74,7 +74,7 @@ function Sidebar() {
           />
         </Link>
       </div>
-     
+
       <div className="flex flex-col justify-between h-[85%] item-center">
         <div className=" flex flex-col gap-5">
           {menu.map((item, index) => (
