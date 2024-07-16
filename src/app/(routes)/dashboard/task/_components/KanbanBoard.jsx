@@ -170,7 +170,7 @@ const KanbanBoard = () => {
   };
 
   return (
-    <div className="p-10 min-h-screen ">
+    <div className=" ">
       <div className="flex justify-between items-center  px-10">
         <h1>Student Task</h1>
         <Dialog open={open} onOpenChange={setOpen}>
