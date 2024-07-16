@@ -3,3 +3,32 @@
 @tailwind utilities;
   
 
+.mySlides {display: none;}
+.active {background-color: #717171;}
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+@layer base {
+    :root {
+      --chart-1: 210 76% 61%; /* Light Blue */
+      --chart-2: 210 58% 39%; /* Medium Blue */
+      --chart-3: 210 37% 87%; /* Dark Blue */
+      --chart-4: 210 74% 66%; /* Soft Light Blue */
+      --chart-5: 210 87% 67%; /* Very Light Blue */
+    }
+  
+    .dark {
+      --chart-1: 210 70% 50%; /* Darker Light Blue */
+      --chart-2: 210 60% 45%; /* Darker Medium Blue */
+      --chart-3: 210 80% 55%; /* Softer Dark Blue */
+      --chart-4: 210 65% 60%; /* Softer Light Blue */
+      --chart-5: 210 75% 55%; /* Softer Very Light Blue */
+    }
+  }
+  
+  
