@@ -1,5 +1,6 @@
 "use client";
 import { Input } from "../../../../components/ui/input";
+import { motion } from 'framer-motion';
 import { BellPlus, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
@@ -54,13 +55,40 @@ function DashboardHeader() {
       <div className="px-10  flex gap-10  justify-between items-center ">
         <Input placeholder="Search" className="max-w-md " />
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           <div className="text-sky-700">{currentDateTime}</div>
           <Drawer>
             <DrawerTrigger>
-              <div className="rounded-full h-fit w-fit p-2 border border-slate-200">
-                <BellPlus className="text-sky-800" />
-              </div>
+            <motion.div
+      className="rounded-full h-fit w-fit p-2 border border-slate-200 bg-white"
+      animate={{
+        scale: [1, 1.1, 1],
+        boxShadow: [
+          '0 0 0 0 rgba(0, 123, 255, 0)',
+          '0 0 0 10px rgba(0, 123, 255, 0.2)',
+          '0 0 0 0 rgba(0, 123, 255, 0)'
+        ]
+      }}
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        repeatType: 'loop'
+      }}
+    >
+      <motion.div
+        animate={{
+          rotate: [0, 10, -10, 0]
+        }}
+        transition={{
+          duration: 0.5,
+          repeat: Infinity,
+          repeatType: 'loop',
+          repeatDelay: 1.5
+        }}
+      >
+        <BellPlus className="text-sky-800 w-6 h-6" />
+      </motion.div>
+    </motion.div>
             </DrawerTrigger>
 
             <DrawerContent>
