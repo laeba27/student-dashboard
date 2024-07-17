@@ -193,7 +193,7 @@ function Page() {
   };
 
   return (
-    <div className="mx-auto p-4 h-[90vh] overflow-hidden rounded-lg">
+    <div className="mx-auto p-4 h-full overflow-hidden rounded-lg">
       <Card className="w-full  mx-auto shadow-lg h-full flex flex-col">
         <CardHeader className="flex flex-row items-center justify-between bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6">
           <CardTitle className="text-3xl font-bold">

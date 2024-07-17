@@ -1,6 +1,6 @@
 "use client";
 import { Input } from "../../../../components/ui/input";
-import { BellPlus } from "lucide-react";
+import { BellPlus, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +11,7 @@ import {
 } from "../../../../components/ui/dropdown-menu";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 function DashboardHeader() {
   const [currentDateTime, setCurrentDateTime] = useState("");
@@ -46,6 +47,24 @@ function DashboardHeader() {
           <div className="rounded-full h-fit w-fit p-2 border border-slate-200">
             <BellPlus className="text-sky-800" />
           </div>
+          <DropdownMenu>
+        <DropdownMenuTrigger>
+          <div className="flex items-center px-3 cursor-pointer">
+            <Image src="/user.png" alt="user" height={40} width={40} />
+            <h2 className="ml-2 flex items-center text-md font-semibold text-gray-800">
+              User <ChevronDown className="h-5 w-5" />
+            </h2>{" "}
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Billing</DropdownMenuItem>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuItem>Subscription</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
         </div>
       </div>
       <div></div>

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   LaptopMinimal,
   CalendarDays,
@@ -9,118 +9,153 @@ import {
   MessageCircle,
   Settings,
   LogOut,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { Button } from "../../../../components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 import Image from "next/image";
-function Sidebar() {
-  const menu = [
-    {
-      id: 1,
-      name: "Dasboard",
-      path: "/dashboard",
-      icon: LaptopMinimal,
-    },
-    {
-      id: 2,
-      name: "Calender",
-      path: "/dashboard/calender",
-      icon: CalendarDays,
-    },
-    {
-      id: 3,
-      name: "Task",
-      path: "/dashboard/task",
-      icon: ClipboardList,
-    },
-    {
-      id: 4,
-      name: "Lesson",
-      path: "/dashboard/lesson",
-      icon: BookOpenCheck,
-    },
-    {
-      id: 4,
-      name: "Examination",
-      path: "/dashboard/examination",
-      icon: School,
-    },
-    {
-      id: 4,
-      name: "Inbox",
-      path: "/dashboard/inbox",
-      icon: MessageCircle,
-    },
-  ];
+import { motion, AnimatePresence } from "framer-motion";
 
+function Sidebar() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const path = usePathname();
-  const [activepath, setactivepath] = useState(path);
+  const [activePath, setActivePath] = useState(path);
+
   useEffect(() => {
-    path && setactivepath(path);
+    path && setActivePath(path);
   }, [path]);
 
-  return (
-    <div className="p-5 py-2 h-screen shadow-xl rounded-3xl ">
-      <div className="flex justify-center">
-        <Link href={"/dashboard"}>
-          <Image
-            className=""
-            src="/logo2.png"
-            width={500}
-            height={500}
-            alt="logo"
-          />
-        </Link>
-      </div>
+  const menu = [
+    { id: 1, name: "Dashboard", path: "/dashboard", icon: LaptopMinimal },
+    { id: 2, name: "Calendar", path: "/dashboard/calender", icon: CalendarDays },
+    { id: 3, name: "Task", path: "/dashboard/task", icon: ClipboardList },
+    { id: 4, name: "Lesson", path: "/dashboard/lesson", icon: BookOpenCheck },
+    { id: 5, name: "Resume Builder", path: "/dashboard/resume", icon: School },
+    { id: 6, name: "Inbox", path: "/dashboard/inbox", icon: MessageCircle },
+  ];
 
-      <div className="flex flex-col justify-between h-[85%] item-center">
-        <div className=" flex flex-col gap-5">
-          {menu.map((item, index) => (
-            <Link key={index} href={item.path}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="w-full  flex gap-2 
-                        justify-start border border-white hover:border-sky-600
-                        hover:bg-blue-200
-                        hover:text-sky-800
-                        font-normal
-                        text-lg"
+  const toggleSidebar = () => setIsCollapsed(!isCollapsed);
+
+  const sidebarVariants = {
+    expanded: { width: "240px" },
+    collapsed: { width: "80px" },
+  };
+
+  return (
+    <motion.div
+      className="relative h-screen shadow-xl bg-blue-50 overflow-hidden"
+      initial="expanded"
+      animate={isCollapsed ? "collapsed" : "expanded"}
+      variants={sidebarVariants}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="p-5 py-2 h-full flex flex-col">
+        <div className="flex justify-between items-center mb-6">
+          <AnimatePresence>
+            {!isCollapsed && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
               >
-                <item.icon className="text-sky-600" /> {item.name}
-              </Button>
-            </Link>
-          ))}
+                <Link href="/dashboard">
+                  <Image src="/logo2.png" width={120} height={40} alt="logo" />
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={toggleSidebar}
+            className="rounded-full hover:bg-gray-100"
+          >
+            {isCollapsed ? <ChevronRight size={24} /> : <ChevronLeft size={24} />}
+          </Button>
         </div>
 
-        <div className=" flex py-5 flex-col gap-5">
-          <Link href="/setting">
-            <div className="flex gap-2 cursor-pointer">
+        <div className="flex flex-col justify-between h-full">
+          <div className="flex flex-col gap-2">
+            {menu.map((item) => (
+              <Link key={item.id} href={item.path}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={`w-full flex gap-3 justify-start items-center rounded-lg transition-all duration-200 ${
+                    activePath === item.path
+                      ? "bg-blue-100 text-blue-700"
+                      : "hover:bg-blue-200"
+                  }`}
+                >
+                  <item.icon size={24} />
+                  <AnimatePresence>
+                    {!isCollapsed && (
+                      <motion.span
+                        initial={{ opacity: 0, width: 0 }}
+                        animate={{ opacity: 1, width: "auto" }}
+                        exit={{ opacity: 0, width: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="whitespace-nowrap overflow-hidden"
+                      >
+                        {item.name}
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </Button>
+              </Link>
+            ))}
+          </div>
+
+          <div className="flex flex-col gap-2 mt-auto">
+            <Link href="/setting">
               <Button
                 variant="ghost"
                 size="sm"
-                className="w-full  flex gap-2 
-                        justify-start border border-white hover:border-blue-600
-                        hover:bg-blue-100
-                        hover:text-blue-800
-                        font-normal
-                        text-lg"
+                className="w-full flex gap-3 justify-start items-center rounded-lg hover:bg-blue-200"
               >
-                <Settings />
-                <h2 className="text-lg">Setting</h2>
+                <Settings size={24} />
+                <AnimatePresence>
+                  {!isCollapsed && (
+                    <motion.span
+                      initial={{ opacity: 0, width: 0 }}
+                      animate={{ opacity: 1, width: "auto" }}
+                      exit={{ opacity: 0, width: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="whitespace-nowrap overflow-hidden"
+                    >
+                      Settings
+                    </motion.span>
+                  )}
+                </AnimatePresence>
               </Button>
-            </div>
-          </Link>
-
-          <div className="flex gap-3 cursor-pointer">
-            <LogOut className="text-orange-500" />
-            <h2 className="text-lg text-orange-500">Logout</h2>
+            </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="w-full flex gap-3 justify-start items-center rounded-lg text-red-500 hover:bg-red-50 hover:text-red-700"
+            >
+              <LogOut size={24} />
+              <AnimatePresence>
+                {!isCollapsed && (
+                  <motion.span
+                    initial={{ opacity: 0, width: 0 }}
+                    animate={{ opacity: 1, width: "auto" }}
+                    exit={{ opacity: 0, width: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="whitespace-nowrap overflow-hidden"
+                  >
+                    Logout
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </Button>
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

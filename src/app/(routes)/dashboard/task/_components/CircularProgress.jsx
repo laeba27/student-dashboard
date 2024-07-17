@@ -13,9 +13,9 @@ export const Seo = ({ progress }) => {
   }, [progress, controls]);
 
   return (
-    <div className="relative w-64 h-64">
+    <div className="relative w-64 h-44">
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full blur-xl opacity-50"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-400 via-sky-500 to-cyan-500 rounded-full blur-xl opacity-50"></div>
 
       <div className="relative w-full h-full">
         <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -54,9 +54,9 @@ export const Seo = ({ progress }) => {
           {/* Gradient definition */}
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#60a5fa" />
-              <stop offset="50%" stopColor="#c084fc" />
-              <stop offset="100%" stopColor="#f472b6" />
+              <stop offset="0%" stopColor="#0F67B1" />
+              <stop offset="50%" stopColor="#3FA2F6" />
+              <stop offset="100%" stopColor="#96C9F4" />
             </linearGradient>
           </defs>
         </svg>

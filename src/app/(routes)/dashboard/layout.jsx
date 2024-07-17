@@ -5,14 +5,14 @@ import RightSidebar from "./_components/RightSidebar";
 
 function layout({ children }) {
   return (
-    <div className="flex h-screen w-screen overflow-hidden gap-1">
+    <div className="flex h-screen  w-screen overflow-hidden gap-1">
       {/* Sidebar */}
-      <div className="hidden md:block rounded-r-3xl w-64 border-r bg-sky-100 border-r-slate-100 h-full">
+      <div className="hidden md:block  h-full">
         <Sidebar />
       </div>
 
       {/* Main Content */}
-      <div className="flex-1  w-full  overflow-hidden">
+      <div className="flex-1  w-full  overflow-y-scroll">
         <DashboardHeader />
         <div className="p-4">{children}</div>
       </div>

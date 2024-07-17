@@ -43,7 +43,9 @@ import {
 import { Seo } from "./CircularProgress";
 
 const KanbanBoard = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState([
+  
+  ]);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -55,6 +57,58 @@ const KanbanBoard = () => {
   const [open, setOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [editingTask, setEditingTask] = useState(null);
+
+
+  const dummyTasks = [
+    {
+      id: "1",
+      title: "Math Homework",
+      description: "Complete exercises 1 to 10 from chapter 5.",
+      dueDate: "2024-07-20",
+      subject: "Mathematics",
+      status: "todo",
+      image: null,
+    },
+    {
+      id: "2",
+      title: "Science Project",
+      description: "Prepare a presentation on renewable energy sources.",
+      dueDate: "2024-07-25",
+      subject: "Physics",
+      status: "inprogress",
+      image: null,
+    },
+    {
+      id: "3",
+      title: "History Essay",
+      description: "Write an essay on the causes of World War II.",
+      dueDate: "2024-07-30",
+      subject: "History",
+      status: "completed",
+      image: null,
+    },
+    {
+      id: "4",
+      title: "Vacation Planning",
+      description: "Plan itinerary for the summer vacation.",
+      dueDate: "2024-08-15",
+      subject: "Personal",
+      status: "todo",
+      image: null,
+    },
+  ];
+
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (!storedTasks || storedTasks.length === 0) {
+      // If no tasks in local storage, set dummy data
+      localStorage.setItem("tasks", JSON.stringify(dummyTasks));
+      setTasks(dummyTasks);
+    } else {
+      // If tasks exist in local storage, use those
+      setTasks(storedTasks);
+    }
+  }, []);
 
   useEffect(() => {
     const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
@@ -170,21 +224,21 @@ const KanbanBoard = () => {
   };
 
   return (
-    <div className=" ">
+    <div className="  ">
       <div className="flex justify-between items-center  px-10">
-        <h1>Student Task</h1>
+        <h1 className="font-bold text-2xl uppercase text-sky-700">Student Task</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
             <Button
               variant="outline"
-              className="bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300 shadow-lg"
+              className="bg-sky-600 text-white hover:bg-sky-200 transition-colors duration-300 shadow-lg"
             >
               <Plus className="mr-2 h-4 w-4" /> Add New Task
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[600px]">
             <DialogHeader>
-              <DialogTitle className="text-2xl font-bold text-purple-800">
+              <DialogTitle className="text-lg font-bold text-sky-800">
                 {editingTask ? "Edit Task" : "Add New Task"}
               </DialogTitle>
             </DialogHeader>
@@ -281,7 +335,7 @@ const KanbanBoard = () => {
             </div>
             <Button
               onClick={saveTask}
-              className="bg-purple-600 text-white hover:bg-purple-700 transition-colors duration-300"
+              className="bg-blue-600 text-white hover:bg-purple-700 transition-colors duration-300"
             >
               {editingTask ? "Update Task" : "Save Task"}
             </Button>
@@ -294,8 +348,8 @@ const KanbanBoard = () => {
             key={status}
             className={` bg-blue-50 border-none overflow-hidden`}
           >
-            <div className=" px-4 py-3 bg-white bg-opacity-50 rounded-2xl">
-              <h2 className="text-2xl mt-2 font-bold mb-4 capitalize text-purple-800">
+            <div className=" px-4 py-2 bg-white bg-opacity-50 rounded-2xl">
+              <h2 className="text-lg  font-bold capitalize text-sky-800">
                 {status === "inprogress" ? "In Progress" : status}
               </h2>
             </div>
@@ -309,22 +363,23 @@ const KanbanBoard = () => {
                   >
                     <div className="flex justify-between items-start">
                       <div className="flex items-center justify-start gap-4 flex-wrap">
-                        <Badge
-                          className={
-                            "bg-red-100 text-red-500 p-2 px-4 font-semibold capitalize text-sm"
-                          }
-                        >
-                          {task?.subject}
-                        </Badge>
-                        <Badge
+                      <Badge
                           className={`${getChipColor(
                             task.status
-                          )} font-semibold p-2 px-4 capitalize text-sm`}
+                          )}  capitalize text-xs`}
                         >
                           {task.status === "inprogress"
                             ? "In Progress"
                             : task.status}
                         </Badge>
+                        <Badge
+                          className={
+                            "bg-blue-100 text-sky-500 p-2 px-4 font-semibold capitalize text-xs "
+                          }
+                        >
+                          {task?.subject}
+                        </Badge>
+                      
                       </div>
 
                       <DropdownMenu>
@@ -343,8 +398,8 @@ const KanbanBoard = () => {
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <p className="font-bold text-lg text-purple-700 px-2 mt-1">
+                    <div className="flex flex-col items-start justify-between">
+                      <p className="font-bold capitalize text-lg text-sky-700  mt-1">
                         {task.title}
                       </p>
                       <div className="flex justify-start items-center mt-3">
@@ -356,7 +411,7 @@ const KanbanBoard = () => {
                         </span>
                       </div>
                     </div>
-                    <p className="text-sm text-gray-600 mt-2 px-2">
+                    <p className="text-sm first-letter:capitalize text-gray-600 mt-2">
                       {task.description}
                     </p>
                     {task.image && (
@@ -391,7 +446,7 @@ const KanbanBoard = () => {
         {/* Progress and Stats Column */}
         <Card className="bg-gray-50 rounded-xl shadow-xl overflow-hidden max-h-[1000px] min-h-[550px] flex flex-col gap-2">
           <div className="bg-white bg-opacity-50 p-4">
-            <h2 className="text-2xl font-bold mb-4 text-purple-800">
+            <h2 className="text-lg font-bold mb-4 text-sky-800">
               Progress & Stats
             </h2>
           </div>
@@ -401,15 +456,15 @@ const KanbanBoard = () => {
             </div>
 
             <div className="grid  grid-cols-1 gap-4 ">
-              <Card className="bg-blue-100 p-4 rounded-lg shadow ">
+              <Card className="bg-blue-100 px-4 py-2  flex items-center justify-between rounded-lg shadow ">
                 <h3 className="text-lg font-semibold text-blue-800 mb-2">
                   To Do
                 </h3>
-                <p className="text-3xl font-bold text-blue-600">
+                <p className="text-xl font-bold text-blue-600">
                   {getTaskCountByStatus("todo")}
                 </p>
               </Card>
-              <Card className="bg-yellow-100 p-4 rounded-lg shadow">
+              <Card className="bg-yellow-100 flex items-center justify-between px-4 py-2 rounded-lg shadow">
                 <h3 className="text-lg font-semibold text-yellow-800 mb-2">
                   In Progress
                 </h3>
@@ -417,7 +472,7 @@ const KanbanBoard = () => {
                   {getTaskCountByStatus("inprogress")}
                 </p>
               </Card>
-              <Card className="bg-green-100 p-4 rounded-lg shadow">
+              <Card className="bg-green-100 flex items-center justify-between px-4 py-2  rounded-lg shadow">
                 <h3 className="text-lg font-semibold text-green-800 mb-2">
                   Completed
                 </h3>
@@ -425,7 +480,7 @@ const KanbanBoard = () => {
                   {getTaskCountByStatus("completed")}
                 </p>
               </Card>
-              <Card className="bg-purple-100 p-4 rounded-lg shadow">
+              <Card className="bg-purple-100 flex items-center justify-between px-4 py-2 rounded-lg shadow">
                 <h3 className="text-lg font-semibold text-purple-800 mb-2">
                   Total Tasks
                 </h3>

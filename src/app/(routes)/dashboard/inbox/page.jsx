@@ -6,6 +6,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Chip,
   Divider,
   IconButton,
   InputAdornment,
@@ -37,6 +38,10 @@ const theme = createTheme({
     primary: { main: "#7C3AED" },
     secondary: { main: "#10B981" },
     background: { default: "#F3F4F6" },
+    error: { main: "#EF4444" },
+    warning: { main: "#F59E0B" },
+    info: { main: "#3B82F6" },
+    success: { main: "#10B981" },
   },
 });
 
@@ -49,22 +54,40 @@ const ChatList = ({ chats, onSelectChat }) => (
         onClick={() => onSelectChat(chat)}
         sx={{
           cursor: "pointer",
-          "&:hover": { bgcolor: "rgba(0, 0, 0, 0.04)" },
+          "&:hover": { bgcolor: "rgba(124, 58, 237, 0.1)" },
+          borderRadius: 2,
+          mb: 1,
         }}
       >
         <ListItemAvatar>
-          <Badge color="secondary" variant="dot" invisible={!chat.online}>
+          <Badge
+            color={chat.online ? "success" : "error"}
+            variant="dot"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            overlap="circular"
+          >
             <Avatar alt={chat.name} src={chat.avatar} />
           </Badge>
         </ListItemAvatar>
         <ListItemText
-          primary={chat.name}
+          primary={
+            <Typography
+              variant="subtitle1"
+              sx={{ fontWeight: chat.unread ? 700 : 400 }}
+            >
+              {chat.name}
+            </Typography>
+          }
           secondary={
             <React.Fragment>
               <Typography
                 sx={{
                   display: "inline",
                   color: chat.unread ? "primary.main" : "text.secondary",
+                  fontWeight: chat.unread ? 600 : 400,
                 }}
                 component="span"
                 variant="body2"
@@ -84,14 +107,16 @@ const ChatList = ({ chats, onSelectChat }) => (
           <Typography
             variant="caption"
             color={chat.unread ? "primary.main" : "text.secondary"}
+            sx={{ fontWeight: chat.unread ? 600 : 400 }}
           >
             {chat.time}
           </Typography>
           {chat.unread && (
-            <Badge
-              badgeContent={chat.unreadCount}
+            <Chip
+              label={chat.unreadCount}
               color="primary"
-              sx={{ mt: 1 }}
+              size="small"
+              sx={{ mt: 1, fontWeight: 600 }}
             />
           )}
         </Box>
@@ -121,11 +146,12 @@ const MessageList = ({ messages }) => (
         <Box
           sx={{
             maxWidth: "70%",
-            bgcolor: message.sender === "me" ? "primary.main" : "grey.200",
+            bgcolor: message.sender === "me" ? "primary.main" : "grey.100",
             color: message.sender === "me" ? "white" : "black",
-            borderRadius: 2,
-            p: 1,
+            borderRadius: 3,
+            p: 2,
             position: "relative",
+            boxShadow: 2,
           }}
         >
           <Typography variant="body1">{message.text}</Typography>
@@ -263,20 +289,41 @@ const Inbox = () => {
   return (
     <ThemeProvider theme={theme}>
       <Box
-        sx={{ display: "flex", height: "90vh", bgcolor: "background.default" }}
+        sx={{
+          display: "flex",
+          height: "90vh",
+          bgcolor: "background.default",
+          borderRadius: 4,
+          overflow: "hidden",
+          boxShadow: 3,
+        }}
       >
         <Box sx={{ width: 360, borderRight: 1, borderColor: "divider" }}>
-          <Box sx={{ p: 2 }}>
+          <Box sx={{ p: 2, bgcolor: "primary.main" }}>
             <Input
               placeholder="Search chats..."
-              startAdornment={<Search size={18} />}
+              startAdornment={<Search size={18} color="white" />}
               fullWidth
+              sx={{
+                bgcolor: "rgba(255,255,255,0.2)",
+                borderRadius: 2,
+                color: "white",
+                "& input::placeholder": { color: "rgba(255,255,255,0.7)" },
+              }}
             />
           </Box>
           <Tabs
             value={tabValue}
             onChange={(e, newValue) => setTabValue(newValue)}
             centered
+            sx={{
+              bgcolor: "primary.main",
+              "& .MuiTab-root": { color: "white" },
+              "& .Mui-selected": { color: "white", fontWeight: 700 },
+            }}
+            TabIndicatorProps={{
+              style: { backgroundColor: "white" },
+            }}
           >
             <Tab label="Individual" />
             <Tab label="Group" />
@@ -298,20 +345,23 @@ const Inbox = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  bgcolor: "primary.light",
                 }}
               >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <Avatar src={selectedChat.avatar} sx={{ mr: 2 }} />
-                  <Typography variant="h6">{selectedChat.name}</Typography>
+                  <Typography variant="h6" color="white">
+                    {selectedChat.name}
+                  </Typography>
                 </Box>
                 <Box>
-                  <IconButton>
+                  <IconButton sx={{ color: "white" }}>
                     <Phone size={20} />
                   </IconButton>
-                  <IconButton>
+                  <IconButton sx={{ color: "white" }}>
                     <Video size={20} />
                   </IconButton>
-                  <IconButton>
+                  <IconButton sx={{ color: "white" }}>
                     <MoreVertical size={20} />
                   </IconButton>
                 </Box>
@@ -344,6 +394,11 @@ const Inbox = () => {
                       </InputAdornment>
                     ),
                   }}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      borderRadius: 3,
+                    },
+                  }}
                 />
               </Box>
             </>
@@ -354,9 +409,13 @@ const Inbox = () => {
                 alignItems: "center",
                 justifyContent: "center",
                 height: "100%",
+                flexDirection: "column",
               }}
             >
-              <Typography variant="h6" color="text.secondary">
+              <Typography variant="h4" color="primary.main" gutterBottom>
+                Welcome to your Inbox
+              </Typography>
+              <Typography variant="subtitle1" color="text.secondary">
                 Select a chat to start messaging
               </Typography>
             </Box>
