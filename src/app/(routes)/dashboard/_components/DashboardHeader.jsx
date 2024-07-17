@@ -38,7 +38,7 @@ function DashboardHeader() {
   }, []);
 
   return (
-    <div className="h-[6vh] pt-5">
+    <div className="h-[6vh] pt-5 mb-4 pb-6">
       <div className="px-10  flex gap-10  justify-between items-center ">
         <Input placeholder="Search" className="max-w-md " />
 
