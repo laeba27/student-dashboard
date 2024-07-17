@@ -9,9 +9,21 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../../../../components/ui/dropdown-menu";
-
+import { CircleX } from 'lucide-react';
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../../../components/ui/drawer";
+import NewUpdates from "../_components/NewUpdates"
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { Button } from "../../../../components/ui/button";
 
 function DashboardHeader() {
   const [currentDateTime, setCurrentDateTime] = useState("");
@@ -44,27 +56,50 @@ function DashboardHeader() {
 
         <div className="flex items-center gap-4">
           <div className="text-sky-700">{currentDateTime}</div>
-          <div className="rounded-full h-fit w-fit p-2 border border-slate-200">
-            <BellPlus className="text-sky-800" />
-          </div>
+          <Drawer>
+            <DrawerTrigger>
+              <div className="rounded-full h-fit w-fit p-2 border border-slate-200">
+                <BellPlus className="text-sky-800" />
+              </div>
+            </DrawerTrigger>
+
+            <DrawerContent>
+            <DrawerClose>
+                 <div className="float-right px-4 text-gray-500">
+                 <CircleX />
+                 </div>
+                </DrawerClose>
+              <DrawerHeader>
+                <DrawerTitle>Upcomming Events</DrawerTitle>
+                <DrawerDescription>
+                  <NewUpdates/>
+                  
+                </DrawerDescription>
+              </DrawerHeader>
+              <DrawerFooter>
+                
+              </DrawerFooter>
+            </DrawerContent>
+          </Drawer>
+
           <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className="flex items-center px-3 cursor-pointer">
-            <Image src="/user.png" alt="user" height={40} width={40} />
-            <h2 className="ml-2 flex items-center text-md font-semibold text-gray-800">
-              User <ChevronDown className="h-5 w-5" />
-            </h2>{" "}
-          </div>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Profile</DropdownMenuItem>
-          <DropdownMenuItem>Billing</DropdownMenuItem>
-          <DropdownMenuItem>Team</DropdownMenuItem>
-          <DropdownMenuItem>Subscription</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <DropdownMenuTrigger>
+              <div className="flex items-center px-3 cursor-pointer">
+                <Image src="/user.png" alt="user" height={40} width={40} />
+                <h2 className="ml-2 flex items-center text-md font-semibold text-gray-800">
+                  User <ChevronDown className="h-5 w-5" />
+                </h2>{" "}
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Profile</DropdownMenuItem>
+              <DropdownMenuItem>Billing</DropdownMenuItem>
+              <DropdownMenuItem>Team</DropdownMenuItem>
+              <DropdownMenuItem>Subscription</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
       <div></div>

@@ -55,7 +55,7 @@ export function SemesterResults() {
   return (
     <Card className="flex-grow h-full">
       <CardHeader>
-      <CardTitle className="text-xl font-bold text-indigo-700">Academic Performance</CardTitle>
+      <CardTitle className="text-2xl font-bold text-black">Academic Performance</CardTitle>
                <CardDescription className="text-gray-600">Semester-wise GPA and Attendance</CardDescription>
       </CardHeader>
       <CardContent>

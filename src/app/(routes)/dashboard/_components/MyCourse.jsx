@@ -38,11 +38,18 @@ const AnimatedProgressBar = ({ progress }) => {
 function MyCourse() {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadCourses = async () => {
-      const courseData = await fetchCourses();
-      setCourses(courseData);
+      try {
+        const courseData = await fetchCourses();
+        setCourses(courseData);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      } finally {
+        setLoading(false); // Ensure loading is set to false after fetch
+      }
     };
 
     loadCourses();
@@ -72,7 +79,11 @@ function MyCourse() {
                 <TableCell className="font-medium">
                   <div className="flex gap-2 items-center">
                     <Book className="text-blue-500" />
+                    <div className="flex flex-col">
                     <h2>{course.subject}</h2>
+                    <h2 className="text-xs text-gray-500 capitalize">{course.teacher}</h2>
+                    </div>
+                    
                   </div>
                 </TableCell>
                 <TableCell>
@@ -105,11 +116,11 @@ function MyCourse() {
     {['updatedata1', 'updatedata2', 'updatedata3', 'updatedata4', 'updatedata5'].map((key, index) => (
       selectedCourse?.[key] && (
         <div key={index} className="border rounded-md p-3 bg-gray-50">
-          <p className="text-sm">{selectedCourse[key]}</p>
-          {selectedCourse?.pdf && (
+          <p className="text-sm">{selectedCourse[key]?.text}</p>
+          {selectedCourse[key]?.pdf && (
             <button
               className="mt-2 px-4 py-2 bg-blue-500 text-white rounded"
-              onClick={() => window.open(selectedCourse.pdf, '_blank')}
+              onClick={() => window.open(selectedCourse[key].pdf, '_blank')}
             >
               View Document
             </button>
@@ -119,6 +130,7 @@ function MyCourse() {
     ))}
   </div>
 </div>
+
                           </div>
                         </SheetDescription>
                       </SheetHeader>
